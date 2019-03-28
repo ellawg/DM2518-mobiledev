@@ -39,19 +39,28 @@
 
       function PanControl(panControlDiv, map) {
 
-        function panButton(dir){
-          var button = document.createElement("button");
-          button.classList.add("fas");
-          button.classList.add("'fa-angle-'+dir"); // TODO
-          panControlDiv.appendChild(button);
-        }
-
-        const panUp = panButton("up");
 
         var panDown = document.createElement("button");
         panDown.classList.add("fas");
         panDown.classList.add("fa-angle-down");
         panControlDiv.appendChild(panDown);
+
+        var panUp = document.createElement("button");
+        panUp.classList.add("fas");
+        panUp.classList.add("fa-angle-up");
+        panControlDiv.appendChild(panUp);
+
+
+/*         function PanButton(dir, div){
+          var button = document.createElement("button");
+          button.classList.add("fas");
+          const className = 'fa-angle-'+dir;
+          button.classList.add(className);
+          div.appendChild(button);
+        }
+
+        const panUp = new PanButton("up", panControlDiv);
+        const panDown = new PanButton("down", panControlDiv); */
 
         let center = map.getCenter();
         let lat = center.lat();
@@ -64,8 +73,6 @@
           map.setCenter({lat: lat-=0.0001, lng: lng});
         });
       }
-
-      
 
       function initMap() {
         var myLatlng = new google.maps.LatLng(59.330792, 18.059048);
