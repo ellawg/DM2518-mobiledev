@@ -29,29 +29,89 @@
         zoomOut.classList.add("fa-minus");
         zoomControlDiv.appendChild(zoomOut);
 
-        zoomIn.addEventListener('click', function(){
-            map.setZoom(1 + map.getZoom())
-        })
-        zoomOut.addEventListener('click', function(){
-            map.setZoom(map.getZoom() - 1)
-        })
+        zoomIn.addEventListener("click", function() {
+          map.setZoom(1 + map.getZoom());
+        });
+        zoomOut.addEventListener("click", function() {
+          map.setZoom(map.getZoom() - 1);
+        });
       }
+
+      function PanControl(panControlDiv, map) {
+
+        function panButton(dir){
+          var button = document.createElement("button");
+          button.classList.add("fas");
+          button.classList.add("'fa-angle-'+dir"); // TODO
+          panControlDiv.appendChild(button);
+        }
+
+        const panUp = panButton("up");
+
+        var panDown = document.createElement("button");
+        panDown.classList.add("fas");
+        panDown.classList.add("fa-angle-down");
+        panControlDiv.appendChild(panDown);
+
+        let center = map.getCenter();
+        let lat = center.lat();
+        let lng = center.lng();
+
+        panUp.addEventListener("click", function() {
+          map.setCenter({lat: lat+=0.0001, lng:lng});
+        });
+        panDown.addEventListener("click", function() {
+          map.setCenter({lat: lat-=0.0001, lng: lng});
+        });
+      }
+
+      
+
       function initMap() {
+        var myLatlng = new google.maps.LatLng(59.330792, 18.059048);
         map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 59.330792, lng: 18.059048 },
+          center: myLatlng,
           // TC 59.330792, 18.059048
           // KTH  59.3498092 18.0684758
           zoom: 18,
           mapTypeId: "hybrid",
-          disableDefaultUI: true
+          disableDefaultUI: true,
+          draggable: false
         });
+
+        // ZOOM CONTROL
         var zoomControlDiv = document.createElement("div");
         // calling the zoomcontroll constructor and passing in the div
         var zoomControl = new ZoomControl(zoomControlDiv, map);
-
         // Attaches the control to the DOM through the map object
         // And adds it to the map at a specific position by pushing it on the position's array
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(zoomControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+          zoomControlDiv
+        );
+
+        // PAN CONTROL
+        var panControlDiv = document.createElement("div");
+        var panControl = new PanControl(panControlDiv, map);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(
+          panControlDiv
+        );
+
+        // MARKER
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          draggable: true,
+          map: map,
+          animation: google.maps.Animation.DROP,
+          title: "I drop and bounce!"
+        });
+        marker.addListener("click", toggleBounce);
+        function toggleBounce() {
+          if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+          } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+          }
+        }
       }
     </script>
     <script
