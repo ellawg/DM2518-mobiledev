@@ -18,15 +18,19 @@
     <div id="map"></div>
     <script>
       var map;
-      function ZoomControl(zoomControlDiv, map) {
-        var zoomIn = document.createElement("button");
-        zoomIn.classList.add("fas");
-        zoomIn.classList.add("fa-plus");
-        zoomControlDiv.appendChild(zoomIn);
+      function createButton(dir){
+          var button = document.createElement("button");
+          button.classList.add("fas");
+          const className = 'fa-'+dir;
+          button.classList.add(className);
+          return button
+        }
 
-        var zoomOut = document.createElement("button");
-        zoomOut.classList.add("fas");
-        zoomOut.classList.add("fa-minus");
+      function ZoomControl(zoomControlDiv, map) {
+
+        const zoomIn = createButton("plus");
+        zoomControlDiv.appendChild(zoomIn);
+        const zoomOut = createButton("minus");
         zoomControlDiv.appendChild(zoomOut);
 
         zoomIn.addEventListener("click", function() {
@@ -38,43 +42,14 @@
       }
 
       function PanControl(panControlDiv, map) {
-        /*
-        var panUp = document.createElement("button");
-        panUp.classList.add("fas");
-        panUp.classList.add("fa-angle-up");
+
+        const panUp = createButton("angle-up");
         panControlDiv.appendChild(panUp);
-
-        var panRight = document.createElement("button");
-        panRight.classList.add("fas");
-        panRight.classList.add("fa-angle-right");
-        panControlDiv.appendChild(panRight);
-  
-        var panDown = document.createElement("button");
-        panDown.classList.add("fas");
-        panDown.classList.add("fa-angle-down");
+        const panDown = createButton("angle-down");
         panControlDiv.appendChild(panDown);
-
-        var panLeft = document.createElement("button");
-        panLeft.classList.add("fas");
-        panLeft.classList.add("fa-angle-left");
+        const panLeft = createButton("angle-left");
         panControlDiv.appendChild(panLeft);
-
-*/
-      function createPanButton(dir){
-          var button = document.createElement("button");
-          button.classList.add("fas");
-          const className = 'fa-angle-'+dir;
-          button.classList.add(className);
-          return button
-        }
-
-        const panUp = createPanButton("up");
-        panControlDiv.appendChild(panUp);
-        const panDown = createPanButton("down");
-        panControlDiv.appendChild(panDown);
-        const panLeft = createPanButton("left");
-        panControlDiv.appendChild(panLeft);
-        const panRight = createPanButton("right");
+        const panRight = createButton("angle-right");
         panControlDiv.appendChild(panRight);
 
         let center = map.getCenter();
