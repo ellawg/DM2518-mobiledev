@@ -17,6 +17,7 @@
   <body>
     <div id="map"></div>
     <script>
+      
       var map;
       function createButton(dir){
           var button = document.createElement("button");
@@ -84,6 +85,7 @@
 
         // ZOOM CONTROL
         var zoomControlDiv = document.createElement("div");
+        zoomControlDiv.classList.add("zoom");
         // calling the zoomcontroll constructor and passing in the div
         var zoomControl = new ZoomControl(zoomControlDiv, map);
         // Attaches the control to the DOM through the map object
@@ -94,6 +96,7 @@
 
         // PAN CONTROL
         var panControlDiv = document.createElement("div");
+        panControlDiv.classList.add("pan");
         var panControl = new PanControl(panControlDiv, map);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(
           panControlDiv
