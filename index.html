@@ -38,29 +38,44 @@
       }
 
       function PanControl(panControlDiv, map) {
-
-
-        var panDown = document.createElement("button");
-        panDown.classList.add("fas");
-        panDown.classList.add("fa-angle-down");
-        panControlDiv.appendChild(panDown);
-
+        /*
         var panUp = document.createElement("button");
         panUp.classList.add("fas");
         panUp.classList.add("fa-angle-up");
         panControlDiv.appendChild(panUp);
 
+        var panRight = document.createElement("button");
+        panRight.classList.add("fas");
+        panRight.classList.add("fa-angle-right");
+        panControlDiv.appendChild(panRight);
+  
+        var panDown = document.createElement("button");
+        panDown.classList.add("fas");
+        panDown.classList.add("fa-angle-down");
+        panControlDiv.appendChild(panDown);
 
-/*         function PanButton(dir, div){
+        var panLeft = document.createElement("button");
+        panLeft.classList.add("fas");
+        panLeft.classList.add("fa-angle-left");
+        panControlDiv.appendChild(panLeft);
+
+*/
+      function createPanButton(dir){
           var button = document.createElement("button");
           button.classList.add("fas");
           const className = 'fa-angle-'+dir;
           button.classList.add(className);
-          div.appendChild(button);
+          return button
         }
 
-        const panUp = new PanButton("up", panControlDiv);
-        const panDown = new PanButton("down", panControlDiv); */
+        const panUp = createPanButton("up");
+        panControlDiv.appendChild(panUp);
+        const panDown = createPanButton("down");
+        panControlDiv.appendChild(panDown);
+        const panLeft = createPanButton("left");
+        panControlDiv.appendChild(panLeft);
+        const panRight = createPanButton("right");
+        panControlDiv.appendChild(panRight);
 
         let center = map.getCenter();
         let lat = center.lat();
@@ -69,9 +84,15 @@
         panUp.addEventListener("click", function() {
           map.setCenter({lat: lat+=0.0001, lng:lng});
         });
-        panDown.addEventListener("click", function() {
+         panDown.addEventListener("click", function() {
           map.setCenter({lat: lat-=0.0001, lng: lng});
         });
+        panLeft.addEventListener("click", function() {
+          map.setCenter({lat: lat, lng: lng-=0.0001});
+        });
+        panRight.addEventListener("click", function() {
+          map.setCenter({lat: lat, lng: lng+=0.0001});
+        }); 
       }
 
       function initMap() {
