@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Simple Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
     <link
       rel="stylesheet"
@@ -15,9 +18,10 @@
     <script src="main.js"></script>
   </head>
   <body>
+      
     <div id="map"></div>
     <script>
-      
+        
       var map;
       function createButton(dir){
           var button = document.createElement("button");
@@ -26,6 +30,16 @@
           button.classList.add(className);
           return button
         }
+
+      function FullScreen(fullScreenDiv){
+        const fullScreen = createButton("expand");
+        fullScreenDiv.appendChild(fullScreen);
+        
+        fullScreenDiv.addEventListener("click", function() {
+            document.body.requestFullscreen();
+            fullScreenDiv.style.display = none;
+        }, false);
+      }
 
       function ZoomControl(zoomControlDiv, map) {
 
@@ -100,6 +114,13 @@
         var panControl = new PanControl(panControlDiv, map);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(
           panControlDiv
+        );
+
+        var fullScreenDiv = document.createElement("div");
+        panControlDiv.classList.add("fs");
+        var fullScreen = new FullScreen(fullScreenDiv, map);
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(
+          fullScreenDiv
         );
 
         // MARKER
