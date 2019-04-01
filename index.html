@@ -15,7 +15,7 @@
       integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
       crossorigin="anonymous"
     />
-    <script src="main.js"></script>
+    <link rel="manifest" href="/manifest.json" />
   </head>
   <body>
     <div id="splash">
@@ -89,17 +89,23 @@
         let lat = center.lat();
         let lng = center.lng();
 
+        function calculatePan(){
+          let pan = 1/map.getZoom()
+          pan = pan * 0.01
+          return pan
+        }
+
         panUp.addEventListener("click", function() {
-          map.setCenter({ lat: (lat += 0.0001), lng: lng });
+          map.setCenter({ lat: (lat += calculatePan()), lng: lng });
         });
         panDown.addEventListener("click", function() {
-          map.setCenter({ lat: (lat -= 0.0001), lng: lng });
+          map.setCenter({ lat: (lat -= calculatePan()), lng: lng });
         });
         panLeft.addEventListener("click", function() {
-          map.setCenter({ lat: lat, lng: (lng -= 0.0001) });
+          map.setCenter({ lat: lat, lng: (lng -= calculatePan()) });
         });
         panRight.addEventListener("click", function() {
-          map.setCenter({ lat: lat, lng: (lng += 0.0001) });
+          map.setCenter({ lat: lat, lng: (lng += calculatePan()) });
         });
       }
 
