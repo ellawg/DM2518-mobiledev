@@ -8,7 +8,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="shortcut icon" href="/pin.png"/>
+    <link rel="manifest" href="/manifest.webmanifest" />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
@@ -25,8 +26,7 @@
     <div id="map"></div>
     <script>
       if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/sw.js").then(self.addEventListener('fetch', (event) => {}));
-        
+        navigator.serviceWorker.register("/sw.js")
       }
 
       function hideShow() {
