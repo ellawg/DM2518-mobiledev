@@ -1,5 +1,6 @@
 #map {
   height: 100%;
+  display: none;
 }
 
 html,
@@ -7,6 +8,18 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background: skyblue;
+}
+#splash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+}
+.img {
+  width:200px;
+  height: auto;
 }
 button {
   font-size: 3em;
@@ -18,11 +31,11 @@ button {
   padding: 50px;
 }
 
-.pan{
+.pan {
   max-width: 100px;
 }
 
-.pan>button{
+.pan > button {
   width: 60px;
   height: 60px;
   padding: 5px;
