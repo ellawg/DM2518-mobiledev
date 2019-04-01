@@ -7,15 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="manifest" href="/manifest.json" />
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
       integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
       crossorigin="anonymous"
     />
-    <link rel="manifest" href="/manifest.json" />
   </head>
   <body>
     <div id="splash">
@@ -25,6 +24,12 @@
     </div>
     <div id="map"></div>
     <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js");
+        self.addEventListener('fetch', (event) => {});
+      }
+
+
       function hideShow() {
         var map1 = document.getElementById("map");
         var splash1 = document.getElementById("splash");
@@ -88,10 +93,10 @@
         let lat = center.lat();
         let lng = center.lng();
 
-        function calculatePan(){
-          let pan = 1/map.getZoom()
-          pan = pan * 0.01
-          return pan
+        function calculatePan() {
+          let pan = 1 / map.getZoom();
+          pan = pan * 0.01;
+          return pan;
         }
 
         panUp.addEventListener("click", function() {
