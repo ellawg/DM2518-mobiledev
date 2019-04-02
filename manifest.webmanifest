@@ -1,10 +1,11 @@
 {
     "name": "MobileMap",
     "short_name": "MobileMap",
-    "display": "standalone",
-    "start_url": "/",
+    "display": "fullscreen",
+    "start_url": "/index.html",
     "background_color": "#fff",
     "description": "Another map app.",
+    "theme_color": "#B12A34",
     "icons": [{
       "src": "pin.png",
       "sizes": "48x48",
@@ -29,5 +30,9 @@
       "src": "pin.png",
       "sizes": "256x256",
       "type": "image/png"
-    }]
+    }, {
+      "src": "pin.png",
+      "sizes": "512x512",
+      "type": "image/png"
+  }]
   }
