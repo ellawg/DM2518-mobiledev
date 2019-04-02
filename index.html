@@ -8,7 +8,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="shortcut icon" href="/pin.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
@@ -24,12 +25,11 @@
     </div>
     <div id="map"></div>
     <script>
+      // Register service worker
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/sw.js");
-        self.addEventListener('fetch', (event) => {});
       }
-
-
+      // Function that shows splash screen
       function hideShow() {
         var map1 = document.getElementById("map");
         var splash1 = document.getElementById("splash");
@@ -43,6 +43,9 @@
       hideShow();
 
       var map;
+
+      // Function that creates icon button.
+      // takes in part of icon name. Ex "fa-plus" where dir = "plus".
       function createButton(dir) {
         var button = document.createElement("button");
         button.classList.add("fas");
@@ -59,12 +62,13 @@
           "click",
           function() {
             document.body.requestFullscreen();
-            fullScreenDiv.style.display = none;
+            fullScreenDiv.style.display = "none";
           },
           false
         );
       }
 
+      // Creates custom zoom controls
       function ZoomControl(zoomControlDiv, map) {
         const zoomIn = createButton("plus");
         zoomControlDiv.appendChild(zoomIn);
@@ -79,6 +83,7 @@
         });
       }
 
+      // Creates custom pan controls
       function PanControl(panControlDiv, map) {
         const panUp = createButton("angle-up");
         panControlDiv.appendChild(panUp);
@@ -113,6 +118,7 @@
         });
       }
 
+      // Initiates map in the div with id map
       function initMap() {
         var myLatlng = new google.maps.LatLng(59.330792, 18.059048);
         map = new google.maps.Map(document.getElementById("map"), {
