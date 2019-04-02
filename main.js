@@ -31,7 +31,7 @@
           "click",
           function() {
             document.body.requestFullscreen();
-            fullScreenDiv.style.display = none;
+            fullScreenDiv.style.display = "none";
           },
           false
         );
