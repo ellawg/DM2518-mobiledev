@@ -58,11 +58,25 @@
         const fullScreen = createButton("expand");
         fullScreenDiv.appendChild(fullScreen);
 
+        var el = document.body;
+
+        // Supports most browsers and their versions.
+        var requestMethod =
+          el.requestFullScreen ||
+          el.webkitRequestFullScreen ||
+          el.mozRequestFullScreen ||
+          el.msRequestFullScreen;
+
         fullScreenDiv.addEventListener(
           "click",
           function() {
-            document.body.requestFullscreen();
-            fullScreenDiv.style.display = "none";
+            if (requestMethod) {
+              // Native full screen.
+              requestMethod.call(el);
+              fullScreenDiv.style.display = "none";
+            } else {
+              alert("could not execute");
+            }
           },
           false
         );
