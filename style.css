@@ -15,10 +15,9 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
-
 }
 .img {
-  width:200px;
+  width: 200px;
   height: auto;
 }
 button {
@@ -28,11 +27,10 @@ button {
   height: 60px;
   border-radius: 50%;
   color: cornflowerblue;
+  background: whitesmoke;
 }
 .zoom > button {
-  
   padding: 15px;
-  background:whitesmoke;
 }
 
 .pan {
@@ -41,7 +39,7 @@ button {
 
 .pan > button {
   font-size: 3em;
-  background: whitesmoke;
+
   padding: 5px;
   max-width: 100px;
 }

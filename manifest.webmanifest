@@ -1,8 +1,8 @@
 {
     "name": "MobileMap",
     "short_name": "MobileMap",
-    "start_url": ".",
     "display": "standalone",
+    "start_url": "/",
     "background_color": "#fff",
     "description": "Another map app.",
     "icons": [{
