@@ -33,8 +33,18 @@
       </div>
     </div>
     <div class="our-buttons">
-      <input id="linda-button" value="Take me to Linda" onclick="takeMeThere('linda')" type="button"/>
-      <input id="ella-button" value="Take me to Ella" onclick="takeMeThere('ella')" type="button"/>
+      <input
+        id="linda-button"
+        value="Take me to Linda"
+        onclick="takeMeThere('linda')"
+        type="button"
+      />
+      <input
+        id="ella-button"
+        value="Take me to Ella"
+        onclick="takeMeThere('ella')"
+        type="button"
+      />
     </div>
     <div id="map"></div>
     <script>
@@ -68,24 +78,21 @@
         return button;
       }
 
+      // Creates custom fullscreen control that listens to clicks
       function FullScreen(fullScreenDiv) {
         const fullScreen = createButton("expand");
         fullScreenDiv.appendChild(fullScreen);
-
         var el = document.body;
-
-        // Supports most browsers and their versions.
+        // Different request methods for different browsers
         var requestMethod =
           el.requestFullScreen ||
           el.webkitRequestFullScreen ||
           el.mozRequestFullScreen ||
           el.msRequestFullScreen;
-
         fullScreenDiv.addEventListener(
           "click",
           function() {
             if (requestMethod) {
-              // Native full screen.
               requestMethod.call(el);
               fullScreenDiv.style.display = "none";
             } else {
@@ -96,7 +103,7 @@
         );
       }
 
-      // Creates custom zoom controls
+      // Creates custom zoom controls that listens to clicks
       function ZoomControl(zoomControlDiv, map) {
         const zoomIn = createButton("plus");
         zoomControlDiv.appendChild(zoomIn);
@@ -111,7 +118,7 @@
         });
       }
 
-      // Creates custom pan controls
+      // Creates custom pan controls that listens to clicks
       function PanControl(panControlDiv, map) {
         const panUp = createButton("angle-up");
         panControlDiv.appendChild(panUp);
@@ -122,27 +129,21 @@
         const panRight = createButton("angle-right");
         panControlDiv.appendChild(panRight);
 
-        let center = map.getCenter();
-        let lat = center.lat();
-        let lng = center.lng();
-
-        function calculatePan() {
-          let pan = 1 / map.getZoom();
-          pan = pan * 0.01;
-          return pan;
-        }
-
         panUp.addEventListener("click", function() {
-          map.setCenter({ lat: (lat += calculatePan()), lng: lng });
+          var panDistance = Math.round(map.getDiv().offsetHeight / 2);
+          map.panBy(0, -1 * panDistance);
         });
         panDown.addEventListener("click", function() {
-          map.setCenter({ lat: (lat -= calculatePan()), lng: lng });
+          var panDistance = Math.round(map.getDiv().offsetHeight / 2);
+          map.panBy(0, 1 * panDistance);
         });
         panLeft.addEventListener("click", function() {
-          map.setCenter({ lat: lat, lng: (lng -= calculatePan()) });
+          var panDistance = Math.round(map.getDiv().offsetWidth / 2);
+          map.panBy(-1 * panDistance, 0);
         });
         panRight.addEventListener("click", function() {
-          map.setCenter({ lat: lat, lng: (lng += calculatePan()) });
+          var panDistance = Math.round(map.getDiv().offsetWidth / 2);
+          map.panBy(1 * panDistance, 0);
         });
       }
 
@@ -162,7 +163,6 @@
         function FindLocation(locationDiv, map) {
           var locationButton = createButton("location-arrow");
           locationDiv.appendChild(locationButton);
-
           if (navigator.geolocation) {
             locationButton.addEventListener("click", function() {
               navigator.geolocation.getCurrentPosition(function(position) {
@@ -180,7 +180,7 @@
           }
         }
 
-        // ZOOM CONTROL
+        // INIT ZOOM CONTROL ON MAP
         var zoomControlDiv = document.createElement("div");
         zoomControlDiv.classList.add("zoom");
         // calling the zoomcontroll constructor and passing in the div
@@ -191,23 +191,25 @@
           zoomControlDiv
         );
 
-        // PAN CONTROL
+        // INIT PAN CONTROL ON MAP
         var panControlDiv = document.createElement("div");
         panControlDiv.classList.add("pan");
         var panControl = new PanControl(panControlDiv, map);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(panControlDiv);
 
+        // INIT FULL SCREEN CONTROL ON MAP
         var fullScreenDiv = document.createElement("div");
         panControlDiv.classList.add("fs");
         var fullScreen = new FullScreen(fullScreenDiv, map);
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fullScreenDiv);
 
+        // INIT LOCATION CONTROL ON MAP
         var locationDiv = document.createElement("div");
         locationDiv.classList.add("loc");
         var location = new FindLocation(locationDiv, map);
         map.controls[google.maps.ControlPosition.RIGHT].push(locationDiv);
 
-        // MARKER
+        // CREATE MARKER ON MAP
         const marker = placeMarker(myLatlng);
 
         marker.addListener("click", toggleBounce);
@@ -219,7 +221,8 @@
           }
         }
       }
-      function placeMarker(loc){
+      // CREATE MARKER ON MAP
+      function placeMarker(loc) {
         var marker = new google.maps.Marker({
           position: loc,
           draggable: true,
@@ -227,21 +230,22 @@
           animation: google.maps.Animation.DROP,
           title: "I drop and bounce!"
         });
-        return marker
+        return marker;
       }
 
-      function takeMeThere(place){
-        let linda = {lat: 59.326900, lng: 18.103956}
-        let ella = {lat: 58.217325, lng: 11.484380}
-        if (place == 'linda'){
+      // Sets location of map according to Take me to-buttons
+      function takeMeThere(place) {
+        let linda = { lat: 59.3269, lng: 18.103956 };
+        let ella = { lat: 58.217325, lng: 11.48438 };
+        if (place == "linda") {
           const pos = { lat: linda.lat, lng: linda.lng };
           placeMarker(pos);
           map.setCenter(pos);
         }
-        if (place == 'ella'){
+        if (place == "ella") {
           const pos = { lat: ella.lat, lng: ella.lng };
           map.setCenter(pos);
-          placeMarker(pos)
+          placeMarker(pos);
         }
       }
     </script>
