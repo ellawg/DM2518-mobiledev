@@ -3,19 +3,28 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Simple Map</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-    <link rel="shortcut icon" href="/pin.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <title>Mobile Map</title>
+    <meta
+      name="viewport"
+      content="width = device-width, initial-scale = 1.0, minimum-scale = 1, maximum-scale = 1, user-scalable = no"
+    />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
       integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <!-- MOBILE -->
+    <link rel="shortcut icon" href="/pin.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <!-- iOS -->
+    <meta name="apple-mobile-web-app-title" content="App name" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" href="/pin.png" />
+    <!-- OTHER -->
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body>
     <div id="splash">
@@ -75,7 +84,7 @@
               requestMethod.call(el);
               fullScreenDiv.style.display = "none";
             } else {
-              alert("could not execute");
+              alert("You're cute! Try this on desktop instead");
             }
           },
           false
@@ -142,7 +151,7 @@
           zoom: 18,
           mapTypeId: "hybrid",
           disableDefaultUI: true,
-          draggable: false
+          draggable: true
         });
 
         // ZOOM CONTROL
