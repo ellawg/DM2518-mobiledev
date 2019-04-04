@@ -147,6 +147,26 @@
         });
       }
 
+      function FindLocation(locationDiv, map) {
+        var locationButton = createButton("location-arrow");
+        locationDiv.appendChild(locationButton);
+        if (navigator.geolocation) {
+          locationButton.addEventListener("click", function() {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+              placeMarker(pos);
+              map.setCenter(pos);
+            });
+          });
+        } else {
+          // If browser doesn't support Geolocation
+          locationButton.classList.add("disabled");
+        }
+      }
+
       // Initiates map in the div with id map
       function initMap() {
         var myLatlng = new google.maps.LatLng(59.330792, 18.059048);
@@ -160,26 +180,22 @@
           draggable: true
         });
 
-        function FindLocation(locationDiv, map) {
-          var locationButton = createButton("location-arrow");
-          locationDiv.appendChild(locationButton);
-          if (navigator.geolocation) {
-            locationButton.addEventListener("click", function() {
-              navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude
-                };
-                placeMarker(pos);
-                map.setCenter(pos);
-              });
-            });
+        initControls();
+
+        // CREATE MARKER ON MAP
+        const marker = placeMarker(myLatlng);
+
+        marker.addListener("click", toggleBounce);
+        function toggleBounce() {
+          if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
           } else {
-            // If browser doesn't support Geolocation
-            locationButton.classList.add("disabled");
+            marker.setAnimation(google.maps.Animation.BOUNCE);
           }
         }
+      }
 
+      function initControls() {
         // INIT ZOOM CONTROL ON MAP
         var zoomControlDiv = document.createElement("div");
         zoomControlDiv.classList.add("zoom");
@@ -208,18 +224,6 @@
         locationDiv.classList.add("loc");
         var location = new FindLocation(locationDiv, map);
         map.controls[google.maps.ControlPosition.RIGHT].push(locationDiv);
-
-        // CREATE MARKER ON MAP
-        const marker = placeMarker(myLatlng);
-
-        marker.addListener("click", toggleBounce);
-        function toggleBounce() {
-          if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-          } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-          }
-        }
       }
       // CREATE MARKER ON MAP
       function placeMarker(loc) {
