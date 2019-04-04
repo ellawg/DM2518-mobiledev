@@ -29,6 +29,13 @@ button {
   color: cornflowerblue;
   background: whitesmoke;
 }
+input{
+  font-size: 1em;
+  margin: 10px;
+  padding: 5px;
+  color: rgb(250, 14, 77);
+  background: whitesmoke;
+}
 .zoom > button {
   padding: 15px;
 }
