@@ -50,6 +50,8 @@
     <script>
       var map;
       var marker;
+      var lindaMarker;
+      var ellaMarker;
       // Register service worker
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/sw.js");
@@ -67,8 +69,6 @@
         }, 2000);
       }
       hideShow();
-
-      
 
       // Function that creates icon button.
       // takes in part of icon name. Ex "fa-plus" where dir = "plus".
@@ -186,7 +186,7 @@
 
         // CREATE MARKER ON MAP
         const firstMarker = placeMarker(myLatlng);
-        
+
         firstMarker.addListener("click", toggleBounce);
         function toggleBounce() {
           if (firstMarker.getAnimation() !== null) {
@@ -195,7 +195,7 @@
             firstMarker.setAnimation(google.maps.Animation.BOUNCE);
           }
         }
-        marker = placeMarker({lat: 59.3498092, lng: 18.0684758});
+        marker = placeMarker({ lat: 59.3498092, lng: 18.0684758 });
       }
 
       function initControls() {
@@ -234,8 +234,7 @@
           position: loc,
           draggable: true,
           map: map,
-          animation: google.maps.Animation.DROP,
-          title: "I drop and bounce!"
+          animation: google.maps.Animation.DROP
         });
         return defMarker;
       }
@@ -247,14 +246,21 @@
         if (place == "linda") {
           const pos = { lat: linda.lat, lng: linda.lng };
           map.setCenter(pos);
-          marker.setPosition(pos);
+          if (lindaMarker !== 'undefined') {
+            lindaMarker = placeMarker(pos);
+          } else {
+            lindaMarker.setPosition(pos)
+          }
         }
         if (place == "ella") {
           const pos = { lat: ella.lat, lng: ella.lng };
           map.setCenter(pos);
-          marker.setPosition(pos);
+          if (ellaMarker !== 'undefined') {
+            ellaMarker = placeMarker(pos);
+          } else {
+            ellaMarker.setPosition(pos)
+          }
         }
-        
       }
     </script>
     <script
